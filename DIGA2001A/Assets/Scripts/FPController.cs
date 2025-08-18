@@ -32,6 +32,9 @@ public class FPController : MonoBehaviour
     public float throwForce = 10f;     
     public float throwUpwardBoost = 1f;
 
+    [Header("Interaction Settings")]
+    public float interactRange = 3f;  
+
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector2 lookInput;
@@ -129,6 +132,35 @@ public class FPController : MonoBehaviour
         {
             controller.height = standHeight;
             moveSpeed = originalMoveSpeed;
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+        {
+            // Only allow objects tagged as "Switchable"
+            if (hit.collider.CompareTag("Switchable"))
+            {
+                var switcher = hit.collider.GetComponent<MaterialSwitcher>();
+                if (switcher != null)
+                {
+                    switcher.ToggleMaterial();
+                }
+            }
+
+            //if the object has the Movable tag
+            if (hit.collider.CompareTag("Movable"))
+            {
+                var mover = hit.collider.GetComponent<Mover>();
+                if (mover != null)
+                {
+                    mover.TriggerMoveUp();
+                }
+            }
         }
     }
 

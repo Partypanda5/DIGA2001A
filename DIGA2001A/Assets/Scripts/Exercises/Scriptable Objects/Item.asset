@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef723e163f8a17146b222c4689ba21a7, type: 3}
   m_Name: Item
   m_EditorClassIdentifier: 
-  itemName: 
-  description: 
-  value: 0
+  itemName: Amazing Magical Necklace
+  description: Wow this necklace is just the best thing in the whole world. Look
+    at how much I can write about this necklace in this text area. It's just the
+    best.
+  value: 1000000

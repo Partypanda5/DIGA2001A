@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e434e230f3cee64d9e9f2376a1b0361, type: 3}
   m_Name: WeaponData
   m_EditorClassIdentifier: 
-  weaponName: 
-  damage: 0
-  weaponCategory: 0
+  weaponName: Gun
+  damage: 10
+  weaponCategory: 1
