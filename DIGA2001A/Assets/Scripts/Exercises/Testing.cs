@@ -1,9 +1,13 @@
 using UnityEngine;
 public class Testing : MonoBehaviour
 {
-    public float rotationSpeed = 45f;
-    void Update()
+    public InventoryItem item;
+    void Start()
     {
-        transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
+        Debug.Log("Item: " + item.itemName);
+        Debug.Log("Description: " + item.description);
+        Debug.Log("Value: " + item.value);
     }
 }
+
+
