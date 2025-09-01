@@ -1,12 +1,18 @@
 using UnityEngine;
 public class Testing : MonoBehaviour
 {
-    public InventoryItem item;
+    public GameObject[] interactables; 
     void Start()
     {
-        Debug.Log("Item: " + item.itemName);
-        Debug.Log("Description: " + item.description);
-        Debug.Log("Value: " + item.value);
+        foreach (GameObject myobject in interactables)
+        {
+            IInteractable interactable = myobject.GetComponent<IInteractable>();
+
+            if (interactable != null)
+            {
+                interactable.Interact();
+            }
+        }
     }
 }
 
