@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 public class FPController : MonoBehaviour
 {
@@ -27,6 +29,8 @@ public class FPController : MonoBehaviour
     public float pickupRange = 3f;
     public Transform holdPoint;
     private PickUpObject heldObject;
+    public TMP_Text pickupText;
+
 
     [Header("Throw Settings")]
     public float throwForce = 10f;     
@@ -41,13 +45,19 @@ public class FPController : MonoBehaviour
     private Vector3 velocity;
     private float verticalRotation = 0f;
 
+    [Header("UI SETTINGS")]
+    public TextMeshProUGUI pickUpText;
+    public Image healthBar;
+    public float healthDamageAmount = 0.25f;
+    private float healAmount = 0.5f;  
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         originalMoveSpeed = moveSpeed;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+      //  Cursor.lockState = CursorLockMode.Locked;
+      //  Cursor.visible = false;
     }
 
     private void Update()
@@ -59,7 +69,35 @@ public class FPController : MonoBehaviour
         {
             heldObject.MoveToHoldPoint(holdPoint.position);
         }
+
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, pickupRange))
+        {
+            PickUpObject pickUp = hit.collider.GetComponent<PickUpObject>();
+            if (pickUp != null)
+            {
+                pickupText.text = pickUp.gameObject.name;
+                return;
+            }
+        }
+
+        // Clear text if not looking at a pickup
+        pickupText.text = "";
     }
+
+    public void TakeDamage()
+    {
+        healthBar.fillAmount -= healthDamageAmount;
+        if (healthBar.fillAmount < 0f)
+            healthBar.fillAmount = 0f;
+    }
+    public void Heal()
+    {
+        healthBar.fillAmount += healAmount;
+        if (healthBar.fillAmount > 1f)
+            healthBar.fillAmount = 1f;
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
