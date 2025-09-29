@@ -16,4 +16,5 @@ public class UIJFScript : MonoBehaviour
     {
         text.text = exampleSlider.value.ToString();
     }
+
 }
