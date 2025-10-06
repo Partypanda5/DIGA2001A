@@ -31,7 +31,6 @@ public class FPController : MonoBehaviour
     private PickUpObject heldObject;
     public TMP_Text pickupText;
 
-
     [Header("Throw Settings")]
     public float throwForce = 10f;     
     public float throwUpwardBoost = 1f;
@@ -49,7 +48,10 @@ public class FPController : MonoBehaviour
     public TextMeshProUGUI pickUpText;
     public Image healthBar;
     public float healthDamageAmount = 0.25f;
-    private float healAmount = 0.5f;  
+    private float healAmount = 0.5f;
+
+    [Header("ANIMATION SETTINGS")]
+    public Animator animator;
 
     private void Awake()
     {
@@ -227,6 +229,10 @@ public class FPController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        float movementMagnitude = new Vector2(moveInput.x, moveInput.y).magnitude; // Calculate how "strong" the player's movement input is (0 when idle, up to 1 when moving fully)
+        animator.SetFloat("Speed", movementMagnitude); //change speed float in animator controller
+
     }
 
     public void HandleLook()
