@@ -201,6 +201,24 @@ public class FPController : MonoBehaviour
                     mover.TriggerMoveUp();
                 }
             }
+
+            else if (hit.collider.CompareTag("Door"))
+            {
+                Animator doorAnimator = hit.collider.GetComponent<Animator>();
+
+                bool isOpen = doorAnimator.GetBool("isOpen");
+
+                if (isOpen)
+                {
+                    doorAnimator.SetTrigger("CloseDoor");
+                    doorAnimator.SetBool("isOpen", false);
+                }
+                else
+                {
+                    doorAnimator.SetTrigger("OpenDoor");
+                    doorAnimator.SetBool("isOpen", true);
+                }
+            }
         }
     }
 
