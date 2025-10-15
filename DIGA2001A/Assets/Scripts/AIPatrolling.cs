@@ -25,6 +25,7 @@ public class AIPatrolling : MonoBehaviour
         
         if (!canDetectPlayer)
         {
+            //old code----------------------------------------------------------------------
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
                 currentPoint++;
@@ -39,6 +40,7 @@ public class AIPatrolling : MonoBehaviour
 
 
             }
+            //------------------------------------------------------------------------------
         }
         else
         {
@@ -54,6 +56,7 @@ public class AIPatrolling : MonoBehaviour
             }
             else
             {
+                //old code----------------------------------------------------------------------
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
                     currentPoint++;
@@ -68,6 +71,7 @@ public class AIPatrolling : MonoBehaviour
 
 
                 }
+                //------------------------------------------------------------------------------
             }
         }
 
