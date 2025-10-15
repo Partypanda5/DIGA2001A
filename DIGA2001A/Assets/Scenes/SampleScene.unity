@@ -4176,6 +4176,8 @@ MonoBehaviour:
   - {fileID: 1029216034}
   - {fileID: 1010895651}
   - {fileID: 1548152850}
+  canDetectPlayer: 0
+  Player: {fileID: 1556977098}
 --- !u!1001 &1140429583
 PrefabInstance:
   m_ObjectHideFlags: 0
