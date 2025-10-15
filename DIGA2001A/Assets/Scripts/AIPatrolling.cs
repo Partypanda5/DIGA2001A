@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,24 +8,67 @@ public class AIPatrolling : MonoBehaviour
     public Transform[] patrolPoints;
     private int currentPoint = 0;
 
+    public bool canDetectPlayer;
+    public GameObject Player;
+    private float playerDistance;
+    private bool playerDetected;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        playerDetected = false;
     }
 
     void Update()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        
+        if (!canDetectPlayer)
         {
-            currentPoint++;
-
-            // Reset to first point if we reach the end
-            if (currentPoint >= patrolPoints.Length)
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                currentPoint = 0;
+                currentPoint++;
+
+                // Reset to first point if we reach the end
+                if (currentPoint >= patrolPoints.Length)
+                {
+                    currentPoint = 0;
+                }
+
+                agent.SetDestination(patrolPoints[currentPoint].position);
+
+
+            }
+        }
+        else
+        {
+            playerDistance = Vector3.Distance(Player.transform.position, transform.position);
+            if (playerDistance <= 3f)
+            {
+                playerDetected = true;
             }
 
-            agent.SetDestination(patrolPoints[currentPoint].position);
+            if(playerDetected)
+            { 
+                agent.SetDestination(Player.transform.position);
+            }
+            else
+            {
+                if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                {
+                    currentPoint++;
+
+                    // Reset to first point if we reach the end
+                    if (currentPoint >= patrolPoints.Length)
+                    {
+                        currentPoint = 0;
+                    }
+
+                    agent.SetDestination(patrolPoints[currentPoint].position);
+
+
+                }
+            }
         }
 
     }
