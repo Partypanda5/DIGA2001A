@@ -201,6 +201,26 @@ public class FPController : MonoBehaviour
                     mover.TriggerMoveUp();
                 }
             }
+
+            if (hit.collider.CompareTag("Door")) // Check if the object is a door
+            {
+                Animator doorAnimator = hit.collider.GetComponent<Animator>();
+                AudioSource doorAudio = hit.collider.GetComponent<AudioSource>();
+
+                // Toggle between open and close animations using a bool parameter
+                bool isOpen = doorAnimator.GetBool("isOpen");
+
+                if (isOpen)
+                {
+                    doorAnimator.SetBool("isOpen", false);
+                    doorAudio.Play();
+                }
+                else
+                {
+                    doorAnimator.SetBool("isOpen", true);
+                    doorAudio.Play();
+                }
+            }
         }
     }
 
